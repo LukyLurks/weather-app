@@ -28,7 +28,7 @@ class WeatherApp extends React.Component {
     const key = 'f90f55ac16dce1d2e99f1bc07cc2c077';
 
     const response = await fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${key}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${key}`
     );
     try {
       if (!response.ok) throw Error(response.statusText);
