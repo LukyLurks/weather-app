@@ -1,0 +1,70 @@
+.WeatherApp {
+  height: 100vh;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.Clear {
+  background: url('./backgrounds/clear-alexander-mils-unsplash-small.jpg')
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.Thunderstorm {
+  background: url('./backgrounds/thunderstorm-jonas-kaiser-unsplash-small.jpg')
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.Drizzle {
+  background: url('./backgrounds/drizzle-anant-chandra-unsplash-small.jpg')
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.Rain {
+  background: url('./backgrounds/rain-lucas-fernando-unsplash-small.jpg')
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.Snow {
+  background: url('./backgrounds/snow-chandler-cruttenden-unsplash-small.jpg')
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.Obscured {
+  background: url('./backgrounds/obscured-justin-cron-unsplash-small.jpg')
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.Clouds {
+  background: url('./backgrounds/clouds-drew-hays-unsplash-small.jpg') no-repeat
+    center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

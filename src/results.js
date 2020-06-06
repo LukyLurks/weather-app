@@ -1,4 +1,5 @@
 import React from 'react';
+import './WeatherResults.css';
 
 function WeatherResults(props) {
   if (props.state.data) {
@@ -15,7 +16,7 @@ function WeatherResults(props) {
 
 function WeatherNotFound(props) {
   return (
-    <div>
+    <div className="WeatherResults">
       <p>{props.error ? props.error.message : 'No data to display'}</p>
     </div>
   );
@@ -30,13 +31,17 @@ class WeatherDetails extends React.Component {
   }
   render() {
     return (
-      <ul>
-        <li>
-          {this.props.data.name}, {this.props.data.sys.country}
-        </li>
-        <li>{this.props.celsius ? this.getCelsius() : this.getFahrenheit()}</li>
-        <button onClick={this.props.toggle}>°C ↔ °F</button>
-      </ul>
+      <div className="WeatherResults">
+        <ul>
+          <li>
+            {this.props.data.name}, {this.props.data.sys.country}
+          </li>
+          <li>
+            {this.props.celsius ? this.getCelsius() : this.getFahrenheit()}
+          </li>
+          <button onClick={this.props.toggle}>°C ↔ °F</button>
+        </ul>
+      </div>
     );
   }
 }

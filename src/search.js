@@ -1,16 +1,17 @@
 import React from 'react';
 import WeatherResults from './results';
+import './FormAndResults.css';
 
 function FormAndResults(props) {
   return (
-    <>
+    <div className="FormAndResults">
       <SearchForm
         onSubmit={props.handleSubmit}
         onChange={props.handleChange}
         value={props.state.query}
       />
       <WeatherResults state={props.state} toggle={props.toggleScale} />
-    </>
+    </div>
   );
 }
 

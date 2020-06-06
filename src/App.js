@@ -1,4 +1,6 @@
 import React from 'react';
+import './App.css';
+import './reset.css';
 import FormAndResults from './search';
 
 class WeatherApp extends React.Component {
@@ -41,9 +43,21 @@ class WeatherApp extends React.Component {
     this.setState((state) => ({ celsius: !state.celsius }));
   }
 
+  /**
+   * Gets the main weather condition name, so we can adjust the
+   * background accordingly. See https://openweathermap.org/weather-conditions
+   */
+  getMainWeather() {
+    if (!this.state.data) return 'Clear';
+    if (/5\d\d/.test(`${this.state.data.weather[0].main.id}`)) {
+      return 'Obscured';
+    }
+    return this.state.data.weather[0].main;
+  }
+
   render() {
     return (
-      <div className="WeatherApp">
+      <div className={`WeatherApp ${this.getMainWeather()}`}>
         <FormAndResults
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}

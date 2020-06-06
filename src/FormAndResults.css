@@ -1,0 +1,13 @@
+.FormAndResults,
+.FormAndResults form,
+.FormAndResults form * {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.FormAndResults {
+  padding: 5%;
+  background-color: hsla(30, 20%, 80%, 0.9);
+}
