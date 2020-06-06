@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/weather-app/static/css/main.ef6ce4b4.chunk.css",
+    "main.js": "/weather-app/static/js/main.f471e849.chunk.js",
+    "main.js.map": "/weather-app/static/js/main.f471e849.chunk.js.map",
+    "runtime-main.js": "/weather-app/static/js/runtime-main.c90f5b59.js",
+    "runtime-main.js.map": "/weather-app/static/js/runtime-main.c90f5b59.js.map",
+    "static/js/2.ffdc2674.chunk.js": "/weather-app/static/js/2.ffdc2674.chunk.js",
+    "static/js/2.ffdc2674.chunk.js.map": "/weather-app/static/js/2.ffdc2674.chunk.js.map",
+    "index.html": "/weather-app/index.html",
+    "precache-manifest.cf24dd47544d43af0890777eb5bf2486.js": "/weather-app/precache-manifest.cf24dd47544d43af0890777eb5bf2486.js",
+    "service-worker.js": "/weather-app/service-worker.js",
+    "static/css/main.ef6ce4b4.chunk.css.map": "/weather-app/static/css/main.ef6ce4b4.chunk.css.map",
+    "static/js/2.ffdc2674.chunk.js.LICENSE.txt": "/weather-app/static/js/2.ffdc2674.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/weather-app/static/media/thunderstorm-jonas-kaiser-unsplash-small.46abc5c8.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c90f5b59.js",
+    "static/js/2.ffdc2674.chunk.js",
+    "static/css/main.ef6ce4b4.chunk.css",
+    "static/js/main.f471e849.chunk.js"
+  ]
+}
