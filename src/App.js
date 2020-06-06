@@ -49,7 +49,7 @@ class WeatherApp extends React.Component {
    */
   getMainWeather() {
     if (!this.state.data) return 'Clear';
-    if (/5\d\d/.test(`${this.state.data.weather[0].main.id}`)) {
+    if (/7\d\d/.test(`${this.state.data.weather[0].main.id}`)) {
       return 'Obscured';
     }
     return this.state.data.weather[0].main;
