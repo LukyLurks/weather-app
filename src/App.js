@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import './reset.css';
-import FormAndResults from './search';
+import FormAndResults from './FormAndResults.js';
 
 class WeatherApp extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class WeatherApp extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.toggleScale = this.toggleScale.bind(this);
+    this.toggleTempScale = this.toggleTempScale.bind(this);
   }
 
   handleChange({ target }) {
@@ -24,7 +24,7 @@ class WeatherApp extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const query = this.state.query;
+    const query = this.state.query.trim();
     const key = 'f90f55ac16dce1d2e99f1bc07cc2c077';
 
     const response = await fetch(
@@ -35,11 +35,19 @@ class WeatherApp extends React.Component {
       const data = await response.json();
       this.setState({ data, error: null });
     } catch (error) {
-      this.setState({ error, data: null });
+			// Users from the US won't have to enter both their state code and "US"
+			if (response.status === 404 && !/(?:us)$/i.test(query.slice(-2))) {
+				this.setState(
+					(state) => ({ query: state.query + ', us' }),
+					(state) => this.handleSubmit(new Event("submit"))
+				);
+			} else {
+				this.setState({ error, data: null });
+			}
     }
   }
 
-  toggleScale() {
+  toggleTempScale() {
     this.setState((state) => ({ celsius: !state.celsius }));
   }
 
@@ -49,7 +57,7 @@ class WeatherApp extends React.Component {
    */
   getMainWeather() {
     if (!this.state.data) return 'Clear';
-    if (/7\d\d/.test(`${this.state.data.weather[0].main.id}`)) {
+    if (/7\d\d/.test(`${this.state.data.weather[0].id}`)) {
       return 'Obscured';
     }
     return this.state.data.weather[0].main;
@@ -61,7 +69,7 @@ class WeatherApp extends React.Component {
         <FormAndResults
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
-          toggleScale={this.toggleScale}
+          toggleTempScale={this.toggleTempScale}
           state={this.state}
         />
       </div>
