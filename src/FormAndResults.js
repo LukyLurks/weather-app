@@ -54,11 +54,11 @@ function WeatherNotFound(props) {
 		<p>{props.error ? props.error.message : ""}</p>
 		<p>
 			You can specify a country/state after a comma, for example:
-			<ul>
-				<li>"paris, tx"</li>
-				<li>"melbourne, au"</li>
-			</ul>
 		</p>
+		<ul>
+			<li>"paris, tx"</li>
+			<li>"melbourne, au"</li>
+		</ul>
 	</>
   return (
     <div className="WeatherResults">{message}</div>
