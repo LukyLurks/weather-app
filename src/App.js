@@ -12,7 +12,12 @@ class WeatherApp extends React.Component {
       error: null,
       celsius: true,
     };
+    this.handleQueryChange = this.handleQueryChange.bind(this);
+    this.toggleTempScale = this.toggleTempScale.bind(this);
+		this.preprocessQuery = this.preprocessQuery.bind(this);
+  }
 
+	componentDidMount() {
 		this.countries = fetch(
 			'countries.json',
 			{
@@ -32,47 +37,51 @@ class WeatherApp extends React.Component {
 				}
 			}
 		).then(response => response.json());
+	}
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.toggleTempScale = this.toggleTempScale.bind(this);
-		this.preprocessQuery = this.preprocessQuery.bind(this);
-  }
-
-  handleChange({ target }) {
+  handleQueryChange({ target }) {
     this.setState({ query: target.value });
   }
 
+	/**
+	 * Allows for more intuitive/user-friendly queries that the API doesn't
+	 * normally accept, like specifying country/state names in full letters
+	 * instead of ISO codes, etc.
+	 */
 	async preprocessQuery(event) {
 		event.preventDefault();
 		const query = this.state.query.trim();
-		if (/(,\s?(\w{3,}))$/.test(query)) {
-			const specifiedPlace = query.match(/(,\s?(?<country>\w{3,}))$/)[2].toLowerCase();
+		// ', tx' or ',australia' in stuff like 'paris, tx' or 'melbourne,australia'
+		const querySuffix = /(,\s?(?<place>\w{2,}))$/i;
+		if (querySuffix.test(query)) {
+			const specifiedPlace = query.match(querySuffix)[2].toLowerCase();
 			try {
-				this.countries.then(data => {
-					for (const entry of data) {
-						if (specifiedPlace === entry.name.toLowerCase()) {
-							const newQuery = query.replace(specifiedPlace, entry.code);
-							return this.handleSubmit(newQuery);
-						}
+				const countries = await this.countries;
+				for (const entry of countries) {
+					if (specifiedPlace === entry.name.toLowerCase()) {
+						const newQuery = query.replace(specifiedPlace, entry.code);
+						return this.sendQuery(newQuery);
 					}
-				});
-				this.usStates.then(data => {
-					for (const entry of data) {
-						if (specifiedPlace === entry.name.toLowerCase()) {
-							const newQuery = query.replace(specifiedPlace, entry.code) + ', us';
-							return this.handleSubmit(newQuery);
-						}
+				}
+				const usStates = await this.usStates;
+				for (const entry of usStates) {
+					if (specifiedPlace === entry.name.toLowerCase()) {
+						const newQuery = query.replace(specifiedPlace, entry.code) + ', us';
+						return this.sendQuery(newQuery);
 					}
-				});
+					if (specifiedPlace === entry.code.toLowerCase()) {
+						const newQuery = query + ', us';
+						return this.sendQuery(newQuery);
+					}
+				}
 			} catch (e) {
 				console.log(e);
 			}
 		}
-		return this.handleSubmit(query);
+		return this.sendQuery(query);
 	}
 
-  async handleSubmit(query) {
+  async sendQuery(query) {
     const key = 'f90f55ac16dce1d2e99f1bc07cc2c077';
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${key}`
@@ -82,12 +91,7 @@ class WeatherApp extends React.Component {
       const data = await response.json();
       this.setState({ data, error: null });
     } catch (error) {
-			// Users from the US won't have to enter both their state code and "US"
-			if (response.status === 404 && !/(?:us)$/i.test(query.slice(-2))) {
-				this.handleSubmit(query + ', us');
-			} else {
-				this.setState({ error, data: null });
-			}
+			this.setState({ error, data: null });
     }
   }
 
@@ -111,8 +115,8 @@ class WeatherApp extends React.Component {
     return (
       <div className={`WeatherApp ${this.getMainWeather()}`}>
         <FormAndResults
-          handleChange={this.handleChange}
-          handleSubmit={this.preprocessQuery}
+          handleQueryChange={this.handleQueryChange}
+          handleQuerySubmit={this.preprocessQuery}
           toggleTempScale={this.toggleTempScale}
           state={this.state}
 					countries={this.countries}

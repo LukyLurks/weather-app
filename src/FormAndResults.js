@@ -5,8 +5,8 @@ function FormAndResults(props) {
   return (
     <div className="FormAndResults">
       <SearchForm
-        onSubmit={props.handleSubmit}
-        onChange={props.handleChange}
+        onSubmit={props.handleQuerySubmit}
+        onChange={props.handleQueryChange}
         value={props.state.query}
       />
       <WeatherResults
@@ -61,8 +61,8 @@ function WeatherNotFound(props) {
 			You can specify a country/state after a comma, for example:
 		</p>
 		<ul>
-			<li>"paris, tx"</li>
-			<li>"melbourne, au"</li>
+			<li>"paris, texas" (or "paris, tx")</li>
+			<li>"melbourne, australia" (or "melbourne, au")</li>
 		</ul>
 	</>
   return (
@@ -77,30 +77,33 @@ class WeatherDetails extends React.Component {
 			countryName: '',
 		};
 	}
-
-  getCelsius() {
-    return `${Math.round(this.props.data.main.temp - 273.15)}°C`;
-  }
-  getFahrenheit() {
-    return `${Math.round(this.props.data.main.temp * (9 / 5) - 459.67)}°F`;
-  }
-	getCountryName() {
-		if (!this.props.data) return;
-		this.props.countries.then(countries => {
-			const name = countries.find(
-				country => country.code === this.props.data.sys.country
-			).name;
-			this.setState({ countryName: name }, () => name);
-		});
-	}
+	
 	componentDidMount() {
 		this.getCountryName();
 	}
+
 	componentDidUpdate(prevProps) {
 		if (prevProps.data.sys.country !== this.props.data.sys.country) {
 			this.getCountryName();
 		}
 	}
+
+  getCelsius() {
+    return `${Math.round(this.props.data.main.temp - 273.15)}°C`;
+  }
+
+  getFahrenheit() {
+    return `${Math.round(this.props.data.main.temp * (9 / 5) - 459.67)}°F`;
+  }
+
+	async getCountryName() {
+		if (!this.props.data) return;
+		const countryCode = this.props.data.sys.country;
+		const countries = await this.props.countries;
+		const name = countries.find(country => country.code === countryCode).name;
+		this.setState({ countryName: name });
+	}
+
   render() {
     return (
       <div className="WeatherResults">
