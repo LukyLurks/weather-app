@@ -9,7 +9,11 @@ function FormAndResults(props) {
         onChange={props.handleChange}
         value={props.state.query}
       />
-      <WeatherResults state={props.state} toggle={props.toggleScale} />
+      <WeatherResults
+				state={props.state}
+				toggle={props.toggleScale}
+				countries={props.countries}
+			/>
     </div>
   );
 }
@@ -43,6 +47,7 @@ function WeatherResults(props) {
         data={props.state.data}
         celsius={props.state.celsius}
         toggle={props.toggle}
+				countries={props.countries}
       />
     );
   }
@@ -66,18 +71,42 @@ function WeatherNotFound(props) {
 }
 
 class WeatherDetails extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			countryName: '',
+		};
+	}
+
   getCelsius() {
     return `${Math.round(this.props.data.main.temp - 273.15)}°C`;
   }
   getFahrenheit() {
     return `${Math.round(this.props.data.main.temp * (9 / 5) - 459.67)}°F`;
   }
+	getCountryName() {
+		if (!this.props.data) return;
+		this.props.countries.then(countries => {
+			const name = countries.find(
+				country => country.code === this.props.data.sys.country
+			).name;
+			this.setState({ countryName: name }, () => name);
+		});
+	}
+	componentDidMount() {
+		this.getCountryName();
+	}
+	componentDidUpdate(prevProps) {
+		if (prevProps.data.sys.country !== this.props.data.sys.country) {
+			this.getCountryName();
+		}
+	}
   render() {
     return (
       <div className="WeatherResults">
         <ul>
           <li>
-            {this.props.data.name}, {this.props.data.sys.country}
+            {this.props.data.name}, {this.state.countryName}
           </li>
           <li>
             {this.props.celsius ? this.getCelsius() : this.getFahrenheit()}
