@@ -1,3 +1,52 @@
 .FormAndResults {
-	background-color: rgba(127, 127, 127, 0.5);
+	font-size: 1.2rem;
+	line-height: 1.5rem;
+	background-color: darkgrey;
+	padding: 16px;
+	border-radius: 8px;
+	box-shadow: 0 0 4px black;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.WeatherResults {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+h1 {
+	font-size: 2rem;
+	padding: 0 10px 10px;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+form,
+ul {
+	margin: 0 0 10px;
+}
+
+input,
+button {
+	line-height: 1.8rem;
+	font-size: 1.2rem;
+	border: 1px solid black;
+}
+
+input[type="text"] {
+	border-radius: 1.2rem 0 0 1.2rem;
+	padding-left: 1rem;
+}
+
+button[type="submit"] {
+	border-radius: 0 1.2rem 1.2rem 0;
+	padding-right: 1rem;
+}
+
+ul {
+	list-style: inside circle;
 }

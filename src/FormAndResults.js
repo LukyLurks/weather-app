@@ -4,6 +4,7 @@ import './FormAndResults.css';
 function FormAndResults(props) {
   return (
     <div className="FormAndResults">
+			<h1>OpenWeatherApp</h1>
       <SearchForm
         onSubmit={props.handleQuerySubmit}
         onChange={props.handleQueryChange}
@@ -11,7 +12,6 @@ function FormAndResults(props) {
       />
       <WeatherResults
 				state={props.state}
-				toggle={props.toggleScale}
 				countries={props.countries}
 			/>
     </div>
@@ -22,7 +22,6 @@ function SearchForm(props) {
   return (
     <form onSubmit={props.onSubmit}>
       <label>
-				City: 
         <input
           id="searchField"
           type="text"
@@ -45,8 +44,6 @@ function WeatherResults(props) {
     return (
       <WeatherDetails
         data={props.state.data}
-        celsius={props.state.celsius}
-        toggle={props.toggle}
 				countries={props.countries}
       />
     );
@@ -56,7 +53,7 @@ function WeatherResults(props) {
 
 function WeatherNotFound(props) {
 	const message = <>
-		<p>{props.error ? props.error.message : ""}</p>
+		<h2>{props.error ? props.error.message : ""}</h2>
 		<p>
 			You can specify a country/state after a comma, for example:
 		</p>
@@ -104,17 +101,28 @@ class WeatherDetails extends React.Component {
 		this.setState({ countryName: name });
 	}
 
+	getIconPath() {
+		const iconId = this.props.data.weather[0].icon;
+		return `http://openweathermap.org/img/wn/${iconId}.png`;
+	}
+
   render() {
     return (
       <div className="WeatherResults">
+				<h2>
+					{this.props.data.name}, {this.state.countryName}
+				</h2>
+				<img id="weather-icon"
+					src={this.getIconPath()}
+					alt={this.props.data.weather[0].description}
+				/>
         <ul>
+					<li>
+						{this.props.data.weather[0].description}
+					</li>
           <li>
-            {this.props.data.name}, {this.state.countryName}
+            {this.getCelsius()} / {this.getFahrenheit()}
           </li>
-          <li>
-            {this.props.celsius ? this.getCelsius() : this.getFahrenheit()}
-          </li>
-          <button onClick={this.props.toggle}>°C ↔ °F</button>
         </ul>
       </div>
     );

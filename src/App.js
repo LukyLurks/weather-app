@@ -10,10 +10,8 @@ class WeatherApp extends React.Component {
       query: '',
       data: null,
       error: null,
-      celsius: true,
     };
     this.handleQueryChange = this.handleQueryChange.bind(this);
-    this.toggleTempScale = this.toggleTempScale.bind(this);
 		this.preprocessQuery = this.preprocessQuery.bind(this);
   }
 
@@ -95,10 +93,6 @@ class WeatherApp extends React.Component {
     }
   }
 
-  toggleTempScale() {
-    this.setState((state) => ({ celsius: !state.celsius }));
-  }
-
   /**
    * Gets the main weather condition name, so we can adjust the
    * background accordingly. See https://openweathermap.org/weather-conditions
@@ -117,7 +111,6 @@ class WeatherApp extends React.Component {
         <FormAndResults
           handleQueryChange={this.handleQueryChange}
           handleQuerySubmit={this.preprocessQuery}
-          toggleTempScale={this.toggleTempScale}
           state={this.state}
 					countries={this.countries}
         />
