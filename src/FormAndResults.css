@@ -50,3 +50,8 @@ button[type="submit"] {
 ul {
 	list-style: inside circle;
 }
+
+footer {
+	font-size: 0.7rem;
+	font-style: italic;
+}

@@ -14,6 +14,9 @@ function FormAndResults(props) {
 				state={props.state}
 				countries={props.countries}
 			/>
+			<footer>
+				Powered by <a href="https://openweathermap.org">OpenWeather</a>
+			</footer>
     </div>
   );
 }
